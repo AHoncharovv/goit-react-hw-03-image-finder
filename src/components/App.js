@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import s from './App.module.css';
 import Searchbar from './Searchbar';
 import ImageGallery from "./ImageGallery";
-
-
+import Button from "./Button";
 
 export class App extends Component {
 
@@ -13,18 +12,24 @@ export class App extends Component {
   }
 
   HandleSubmitForm = searchValue => {
-    this.setState({ searchValue });
+    this.setState({ searchValue, page: 1 });
   }
+  
+  HandleButtonLoadMore = () => {
+    this.setState(prev => ({ page: prev.page + 1 }));
+  };
 
   render() {
+    const { page, searchValue } = this.state;
     return (
-    <div className={s.app}>
+      <div className={s.app}>
         <Searchbar onSubmit={this.HandleSubmitForm} />
 
-        <ImageGallery picture={this.state.searchValue} page={this.state.page}/>
+        <ImageGallery picture={searchValue} page={page} />
         
-
-
+        {searchValue && <Button onClick={this.HandleButtonLoadMore}/>}
+        
+      
     </div>
   );
   }

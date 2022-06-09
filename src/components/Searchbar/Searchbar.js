@@ -3,7 +3,7 @@ import s from './Searchbar.module.css'
 
 export default class Searchbar extends Component{
     state = {
-        searchValue: ''
+        searchValue: '',
     }
 
     HandleInputSearch = event => {
