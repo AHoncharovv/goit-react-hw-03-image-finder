@@ -43,8 +43,11 @@ export default class ImageGallery extends Component {
     }
 
     render() {
+
         const { searchPicture, show } = this.state;
+
         return (
+            
             <>
                 { show &&
                     <div className={s.loader}>

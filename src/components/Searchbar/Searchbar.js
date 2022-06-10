@@ -24,6 +24,7 @@ export default class Searchbar extends Component{
 
     render() {
         return (
+            
             <header className={s.searchBar}>
                 <form className={s.searchForm} onSubmit={this.HandleSubmit}>
                     <button type="submit" className={s.searchFormButton}>

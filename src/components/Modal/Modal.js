@@ -22,14 +22,16 @@ export default class Modal extends Component {
     };
 
     render() {
+        
         return createPortal(
+
             <div className={s.overlay} onClick={this.onclickModalClose}>
                 <div className={s.modal}>
                     <img src={this.props.url} alt="" />
                 </div>
             </div>,
             modalRoot,
-    )
+        )
     }
 }
 

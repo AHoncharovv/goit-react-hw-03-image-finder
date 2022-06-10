@@ -9,7 +9,9 @@ export default class ImageGalleryItem extends Component {
     }
 
     render() {
+
         return (
+            
             <li className={s.imageGalleryItem}>
                 <img
                     src={this.props.picture.webformatURL}
