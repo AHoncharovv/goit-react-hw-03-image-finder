@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import s from './Searchbar.module.css'
+import PropTypes from 'prop-types';
+import s from './Searchbar.module.css';
 
 export default class Searchbar extends Component{
+
     state = {
         searchValue: '',
     }
@@ -12,11 +14,10 @@ export default class Searchbar extends Component{
 
     HandleSubmit = event => {
         event.preventDefault();
-
         if (this.state.searchValue.trim() === '') {
             alert("Введите текст.")
-            return;
-        }
+            return
+        };
         this.props.onSubmit(this.state.searchValue);
         this.setState({ searchValue: '' });
     }
@@ -26,20 +27,26 @@ export default class Searchbar extends Component{
             <header className={s.searchBar}>
                 <form className={s.searchForm} onSubmit={this.HandleSubmit}>
                     <button type="submit" className={s.searchFormButton}>
-                        <span className={s.searchFormButtonLabel}>Search</span>
+                        <span className={s.searchFormButtonLabel}>
+                            Search
+                        </span>
                     </button>
 
                     <input
-                    className={s.searchFormInput}
-                    type="text"
-                    autoComplete="off"
-                    autoFocus
-                    placeholder="Search images and photos"
-                    onChange={this.HandleInputSearch}
-                    value={this.state.searchValue}
+                        className={s.searchFormInput}
+                        type="text"
+                        autoComplete="off"
+                        autoFocus
+                        placeholder="Search images and photos"
+                        onChange={this.HandleInputSearch}
+                        value={this.state.searchValue}
                     />
                 </form>
             </header>
         )
     }
+}
+
+Searchbar.propTypes = {
+    onSubmit: PropTypes.func.isRequired,
 }
