@@ -8,25 +8,23 @@ export default class Searchbar extends Component{
         searchValue: '',
     }
 
-    HandleInputSearch = event => {
+    handleInputSearch = event => {
         this.setState({searchValue: event.currentTarget.value.toLowerCase()})
     }
 
-    HandleSubmit = event => {
+    handleSubmit = event => {
         event.preventDefault();
         if (this.state.searchValue.trim() === '') {
             alert("Введите текст.")
             return
         };
         this.props.onSubmit(this.state.searchValue);
-        this.setState({ searchValue: '' });
     }
 
     render() {
         return (
-            
             <header className={s.searchBar}>
-                <form className={s.searchForm} onSubmit={this.HandleSubmit}>
+                <form className={s.searchForm} onSubmit={this.handleSubmit}>
                     <button type="submit" className={s.searchFormButton}>
                         <span className={s.searchFormButtonLabel}>
                             Search
@@ -39,7 +37,7 @@ export default class Searchbar extends Component{
                         autoComplete="off"
                         autoFocus
                         placeholder="Search images and photos"
-                        onChange={this.HandleInputSearch}
+                        onChange={this.handleInputSearch}
                         value={this.state.searchValue}
                     />
                 </form>
