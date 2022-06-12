@@ -31,7 +31,6 @@ export class App extends Component {
       this.setState({ isLoading: true });
       fetchPicture(newSearch, newPage)
         .then(response => {
-          console.log("test", response.hits)
           this.setState({ totalPages: response.total })
           this.setState(prev => ({ searchPicture: [...prev.searchPicture, ...response.hits] }))})
             .catch(error => this.setState({ error }))
