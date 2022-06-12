@@ -24,6 +24,8 @@ export default function ImageGallery({searchPicture, clickedUrl}) {
 }
 
 ImageGallery.propTypes = {
-    searchPicture: PropTypes.array.isRequired,
+    searchPicture: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        })),
     clickedUrl: PropTypes.func.isRequired,
 }

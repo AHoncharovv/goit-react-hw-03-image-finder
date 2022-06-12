@@ -6,6 +6,7 @@ import Searchbar from './Searchbar';
 import ImageGallery from "./ImageGallery";
 import Button from "./Button";
 import Modal from './Modal';
+import { render } from "@testing-library/react";
 
 export class App extends Component {
 
@@ -28,21 +29,19 @@ export class App extends Component {
 
     if (prevSearch !== newSearch || prevPage !== newPage) {
 
-        this.setState({ isLoading: true });
-        fetchPicture(newSearch, newPage)
-          .then(resp => {
-                this.setState({ totalPages: Math.ceil(resp.total / 12) })
-                prevSearch === newSearch ?
-                    this.setState(prev => ({ searchPicture: [...prev.searchPicture, ...resp.hits] })) :
-                    this.setState({ searchPicture: resp.hits })
-                })
-        .catch(error => this.setState({ error }))
-        .finally(() => this.setState({ isLoading: false }));
+      this.setState({ isLoading: true });
+      fetchPicture(newSearch, newPage)
+        .then(resp => {
+          this.setState({ totalPages: resp.total })
+          this.setState(prev => ({ searchPicture: [...prev.searchPicture, ...resp.hits] }))})
+            .catch(error => this.setState({ error }))
+            .finally(() => this.setState({ isLoading: false }))
     }
   }
-
+  
+            
   handleSubmitForm = searchValue => {
-    this.setState({ searchValue, page: 1, modalUrl: null });
+    this.setState({ searchValue, page: 1, modalUrl: null, searchPicture: [] });
   }
   
   handleButtonLoadMore = () => {
@@ -58,31 +57,32 @@ export class App extends Component {
     this.setState({modalUrl: clickedUrl.largeImageURL})
   }
 
-  render() {
+  render(){
     const { page, searchPicture, modalUrl, totalPages, isLoading } = this.state;
 
     return (
-      <div className={s.app}>
-
-        <Searchbar onSubmit={this.handleSubmitForm} />
-
-        {modalUrl && <Modal url={modalUrl} onClick={this.modalClose} />}
-
-        {isLoading &&
-          <div className={s.loader}>
-            <Grid
-              height="50"
-              width="50"
-              color='tomato'
-              ariaLabel='loading'
-            />
-          </div>}
-
-        <ImageGallery searchPicture={searchPicture} clickedUrl={this.handleClick} />
         
-        {(page >= 1 && page <= totalPages) && <Button onClick={this.handleButtonLoadMore} />}
-        
-      </div>
+        <div className={s.app}>
+
+          <Searchbar onSubmit={this.handleSubmitForm} />
+
+          {modalUrl && <Modal url={modalUrl} onClick={this.modalClose} />}
+
+          {isLoading &&
+            <div className={s.loader}>
+              <Grid
+                height="50"
+                width="50"
+                color='tomato'
+                ariaLabel='loading'
+              />
+            </div>}
+
+          <ImageGallery searchPicture={searchPicture} clickedUrl={this.handleClick} />
+          
+          {(page >= 1 && searchPicture.length < totalPages) && <Button onClick={this.handleButtonLoadMore} />}
+          
+        </div>
     );
-  };
-};
+  }
+}
