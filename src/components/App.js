@@ -6,7 +6,6 @@ import Searchbar from './Searchbar';
 import ImageGallery from "./ImageGallery";
 import Button from "./Button";
 import Modal from './Modal';
-import { render } from "@testing-library/react";
 
 export class App extends Component {
 
@@ -31,10 +30,10 @@ export class App extends Component {
 
       this.setState({ isLoading: true });
       fetchPicture(newSearch, newPage)
-        .then(resp => {
-          console.log("test", resp.hits)
-          this.setState({ totalPages: resp.total })
-          this.setState(prev => ({ searchPicture: [...prev.searchPicture, ...resp.hits] }))})
+        .then(response => {
+          console.log("test", response.hits)
+          this.setState({ totalPages: response.total })
+          this.setState(prev => ({ searchPicture: [...prev.searchPicture, ...response.hits] }))})
             .catch(error => this.setState({ error }))
             .finally(() => this.setState({ isLoading: false }))
     }
